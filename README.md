@@ -32,7 +32,7 @@ The syntax this script recognises follows the obsidian task's plugin syntax. Eac
 | 🔼    | priority medium   | Medium priority level.                                               |
 | 🔽    | priority low      | Low priority level.                                                  |
 | ⏬    | priority lowest   | Lowest priority level.                                               |
-~~| 🔁    | recurring         | Indicates the task recurs on a schedule.                          |~~
+| ~~🔁~~    | ~~recurring~~      | ~~Indicates the task recurs on a schedule.~~                        |
 | ➕    | created date      | Date the task was created. _(Ignored)_                              |
 | ⛔    | depends on id     | Task dependency (another task this one depends on). _(Ignored)_     |
 | 🏁    | on completion     | Task or action to trigger upon completion. _(Ignored)_              |
