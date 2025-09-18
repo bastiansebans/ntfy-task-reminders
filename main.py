@@ -8,8 +8,10 @@ import json
 import re
 from utils import ( get_last_modified_time,
 				 	get_last_accessed_time,
-					set_last_accessed_time
+				 	set_last_modified_time,
+					set_last_accessed_time,
 				  )
+from tag_substitutions import ntfy_emojis
 
 load_dotenv()
 
@@ -45,7 +47,7 @@ def list_tasks(filelist):
 
 	for file in filelist:
 		title = file[str(file).rfind("/")+1:file.rfind(".md")]
-		print(title)
+		# print(title)
 		with open(file, "r") as f:
 			lines = f.readlines()
 			for line in lines:
@@ -53,13 +55,15 @@ def list_tasks(filelist):
 				and ("- [ ]" in line or "- [/]" in line) \
 				and ('📅' in line or '⏳' in line or'🛫' in line):
 					line = line.strip()
-					task = parse_task(line)
+					task = parse_task(title, line)
+					if task is not None:
+						tasklist.append(task)
 
 	return tasklist
 
 
 
-def parse_task(line):
+def parse_task(title, line):
 	fields = {
 	'#task': 'task',
 	'🆔': 'id',
@@ -87,10 +91,14 @@ def parse_task(line):
 	if parts[0]=="":
 		parts = parts[1::]
 
-	print(parts)
+	parts.remove("#task")
+
+	# print(parts)
 
 	if '📅' in parts:
 		due_date = parts[parts.index('📅')+1]
+		parts.remove('📅')
+		parts.remove(due_date)
 		if '⌚' in parts:
 			time = parts[parts.index('⌚')+1]
 			due_date = due_date + " " + time
@@ -102,6 +110,8 @@ def parse_task(line):
 	
 	if '⏳' in parts:
 		scheduled_date = parts[parts.index('⏳')+1]
+		parts.remove('⏳')
+		parts.remove(scheduled_date)
 		if '⌚' in parts:
 			time = parts[parts.index('⌚')+1]
 			scheduled_date = scheduled_date + " " + time
@@ -113,6 +123,8 @@ def parse_task(line):
 	
 	if '🛫' in parts:
 		start_date = parts[parts.index('🛫')+1]
+		parts.remove('🛫')
+		parts.remove(start_date)
 		if '⌚' in parts:
 			time = parts[parts.index('⌚')+1]
 			start_date = start_date + " " + time
@@ -122,6 +134,11 @@ def parse_task(line):
 	else:
 		start_date = datetime.fromtimestamp(0)
 
+	if '⌚' in parts:
+			time = parts[parts.index('⌚')+1]
+			parts.remove('⌚')
+			parts.remove(time)
+
 	try:
 		soonest_date = min(
 			dt for dt in [due_date, scheduled_date, start_date]
@@ -130,6 +147,20 @@ def parse_task(line):
 	except ValueError:
 		soonest_date = None
 		return None
+
+	priority = 3
+	if '⏬' in parts:
+		priority = 1
+	elif '🔽' in parts:
+		priority = 2
+	elif '⏫' in parts:
+		priority = 4
+	elif '🔺' in parts:
+		priority = 5
+
+	print(parts)
+	message = ' '.join(parts)
+	return (title, message, priority, soonest_date)
 
 
 
@@ -141,13 +172,14 @@ def main():
 		sys.exit(0)
 
 	tasklist = list_tasks(filelist)
+	print(tasklist)
 	if len(tasklist) <= 0:
 		print("No tasks to send reminders for! Exiting...")
 		sys.exit(0)
-	# set_last_accessed_time(__file__, now)
+	set_last_accessed_time(__file__, now)
 	# for debugging
-	# for file in filelist:
-		# set_last_modified_time(file, now)
+	for file in filelist:
+		set_last_modified_time(file, now)
 
 
 
