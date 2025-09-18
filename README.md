@@ -1,5 +1,5 @@
 # Obsidian tasks + NTFY
-This simple script combines Obsidian's Tasks plugin and a [ntfy](https://github.com/binwiederhier/ntfy) instance introducing reminder notifications. 
+This simple script combines Obsidian's Tasks plugin and a [ntfy](https://github.com/binwiederhier/ntfy) instance introducing reminder notifications.
 
 ## How to use
 
@@ -32,11 +32,10 @@ The syntax this script recognises follows the obsidian task's plugin syntax. Eac
 | 🔼    | priority medium   | Medium priority level.                                               |
 | 🔽    | priority low      | Low priority level.                                                  |
 | ⏬    | priority lowest   | Lowest priority level.                                               |
-| 🔁    | recurring         | Indicates the task recurs on a schedule.                            |
-| ➕    | created_date      | Date the task was created.                                           |
-| ⛔    | depends_on_id     | Task dependency (another task this one depends on).                 |
-| 🏁    | on_completion     | Task or action to trigger upon completion.                         |
-| 🏷️    | tag               | Tag or label for grouping or filtering tasks.                       |
+~~| 🔁    | recurring         | Indicates the task recurs on a schedule.                          |~~
+| ➕    | created date      | Date the task was created. _(Ignored)_                              |
+| ⛔    | depends on id     | Task dependency (another task this one depends on). _(Ignored)_     |
+| 🏁    | on completion     | Task or action to trigger upon completion. _(Ignored)_              |
 
 
 Additionally, the standard task syntax can be extended by these fields to match ntfy functionality:
