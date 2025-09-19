@@ -20,19 +20,19 @@ day_start=09:00
 ### Syntax
 The syntax this script recognises follows the obsidian task's plugin syntax. Each line satisfying requirements from (3.) will be split by the keywords/Emojis:
 
-| Emoji | Name              | Function                                                             |
-|-------|-------------------|----------------------------------------------------------------------|
-| #task | task message      | The message of the task; markdown will be preserved _(Required)_     |
-| 🆔    | id                | Unique identifier for the task.                                      |
+| Emoji | Name              | Function                                                            |
+|-------|-------------------|---------------------------------------------------------------------|
+| #task | task message      | The message of the task; markdown will be preserved _(Required)_    |
+| 🆔    | id                | Unique identifier for the task.                                     |
 | 📅    | due date          | Date by which the task should be completed.                         |
 | ⏳    | scheduled date    | Date when the task is scheduled to begin.                           |
 | 🛫    | start date        | Date when the task actually starts.                                 |
-| 🔺    | priority highest  | Highest priority level.                                              |
-| ⏫    | priority high     | High priority level.                                                 |
-| 🔼    | priority medium   | Medium priority level.                                               |
-| 🔽    | priority low      | Low priority level.                                                  |
-| ⏬    | priority lowest   | Lowest priority level.                                               |
-| ~~🔁~~    | ~~recurring~~      | ~~Indicates the task recurs on a schedule.~~                        |
+| 🔺    | priority highest  | Highest priority level.                                             |
+| ⏫    | priority high     | High priority level.                                                |
+| 🔼    | priority medium   | Medium priority level.                                              |
+| 🔽    | priority low      | Low priority level.                                                 |
+| ⏬    | priority lowest   | Lowest priority level.                                              |
+| ~~🔁~~ | ~~recurring~~    | ~~Indicates the task recurs on a schedule.~~                        |
 | ➕    | created date      | Date the task was created. _(Ignored)_                              |
 | ⛔    | depends on id     | Task dependency (another task this one depends on). _(Ignored)_     |
 | 🏁    | on completion     | Task or action to trigger upon completion. _(Ignored)_              |
@@ -42,7 +42,7 @@ Additionally, the standard task syntax can be extended by these fields to match 
 
 | Emoji | Name   | Function                                                             |
 |-------|--------|----------------------------------------------------------------------|
-| ⌚    | Time   | Time of day to send out notification. Uses soonest future date.     |
+| ⌚    | Time   | Time of day to send out notification. Gets combined with a soonest future date.  |
 | 📁    | File   | Path in quotes to attachement file to send out with notification.  |
 | 🏷️    | Tag    | Additional emojis to use as ntfy notification [tags](https://docs.ntfy.sh/publish/#tags-emojis) |
 | 🗺️    | geo    |  Links to open in maps |

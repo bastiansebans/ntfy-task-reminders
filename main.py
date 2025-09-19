@@ -162,6 +162,28 @@ def parse_task(title, line):
 	message = ' '.join(parts)
 	return (title, message, priority, soonest_date)
 
+def read_scheduled_notifications():
+	import requests
+	ntfy_messages = []
+	headers = {
+		"Authorization": f"Bearer {__NTFY__TOKEN__}",
+		"Accept": "application/json",
+	}
+	response = requests.get("".join([__NTFY_URL__, __NTFY_TOPIC__, "/json?poll=1&sched=1"]), headers=headers)
+	for line in response.iter_lines():
+			if not line:
+				continue
+			line = json.loads(line)
+			ntfy_messages.append(line)
+
+	filtered = [item for item in ntfy_messages if item['event'] == 'message' and item['time'] >= now.timestamp()]
+	print(filtered)
+	# print(ntfy_messages)
+
+
+def dispatch_notification(task):
+	pass
+
 
 
 
@@ -184,4 +206,5 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+	# main()
+	read_scheduled_notifications()
