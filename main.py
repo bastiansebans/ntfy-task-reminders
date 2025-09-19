@@ -158,6 +158,11 @@ def parse_task(title, line):
 	elif '🔺' in parts:
 		priority = 5
 
+	if '🆔' in parts:
+		task_id = parts[parts.index('🆔')+1]
+		parts.remove('🆔')
+		parts.remove('task_id')
+
 	print(parts)
 	message = ' '.join(parts)
 	return (title, message, priority, soonest_date)
