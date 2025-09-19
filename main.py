@@ -177,12 +177,19 @@ def read_scheduled_notifications():
 			ntfy_messages.append(line)
 
 	filtered = [item for item in ntfy_messages if item['event'] == 'message' and item['time'] >= now.timestamp()]
-	print(filtered)
-	# print(ntfy_messages)
-
+	return filtered
 
 def dispatch_notification(task):
-	pass
+	print(task.id)
+	headers = {
+		"Authorization": f"Bearer {__NTFY__TOKEN__}",
+		'Title': task.title,
+		'At': str(int(task.date.timestamp()))
+
+
+	}
+	# response = requests.post("".join([__NTFY_URL__, __NTFY_TOPIC__]), headers=headers)
+
 
 
 
@@ -198,6 +205,11 @@ def main():
 	if len(tasklist) <= 0:
 		print("No tasks to send reminders for! Exiting...")
 		sys.exit(0)
+
+
+	ntfy_messages = read_scheduled_notifications()
+
+
 	set_last_accessed_time(__file__, now)
 	# for debugging
 	for file in filelist:
@@ -206,5 +218,4 @@ def main():
 
 
 if __name__ == "__main__":
-	# main()
-	read_scheduled_notifications()
+	main()
